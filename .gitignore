@@ -14,7 +14,7 @@ build/
 tests/report/
 
 db.sqlite3
-uwsgi
+uwsgi/*
 !uwsgi/*.gitkeep
 
 media
