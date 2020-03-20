@@ -16,7 +16,7 @@ domain=‘http(s)://lostandfoundv2.yiwangchunyu.wang’
 ```mermaid
 graph LR
     H(用户登录) --> A[获取openid]
-	A --> B(loginByOpenid)
+    A --> B(loginByOpenid)
     B --> C{登录成功?}
     C -->|是| D(缓存用户信息)
     C -->|否| E[调用login,鉴权]
