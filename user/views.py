@@ -60,7 +60,8 @@ def login(request):
                 'name':login_res['data']['name'],
                 'gender':dict['gender'],
                 'phone':dict['phone'],
-                'avatar':dict['avatar']
+                'avatar':dict['avatar'],
+                'status':1
             }
             user,created=User.objects.update_or_create(stu_id=stu_id,defaults=update)
             # 更新openid
@@ -93,7 +94,7 @@ def logout(request):
                              'data': {'required': list(required), 'yours': request.POST.dict()}})
     try:
         user_id=request.POST['user_id']
-        UserOpenid.objects.filter(user_id=user_id).update(status=1)
+        UserOpenid.objects.filter(user_id=user_id).update(status=0)
     except Exception as e:
         res={'code':-2, 'msg':e.__str__(), 'data':[]}
     return JsonResponse(res)

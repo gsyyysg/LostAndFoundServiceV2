@@ -62,7 +62,7 @@ return:
 微信更新后使用如下方法：   
 https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/functions/userinfo.html
 
-### <a name='loginByOpenid'>loginByOpenid</a> 获取用户openid   
+### <a name='loginByOpenid'>loginByOpenid</a> 通过openid登陆，获取个人信息，以及user_id   
 url = {domain}/service/user/loginByOpenid   
 method = post   
 params:   
@@ -92,7 +92,7 @@ return:
 }
 ```
 
-### <a name='logout'>logout</a> 获取用户openid   
+### <a name='logout'>logout</a> 用户登出   
 url = {domain}/service/user/logout   
 method = post   
 params:   
@@ -110,7 +110,7 @@ return:
 }
 ```
 
-### <a name='get'>get</a> 获取用户openid   
+### <a name='get'>get</a> 获取用户详情   
 url = {domain}/service/user/get   
 method = post   
 params:   
@@ -140,7 +140,7 @@ return:
 }
 ```
 
-### <a name='update'>update</a> 获取用户openid   
+### <a name='update'>update</a> 更新用户信息   
 url = {domain}/service/user/update   
 method = post   
 params:   
