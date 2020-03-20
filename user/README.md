@@ -10,19 +10,30 @@
 ## 接口文档   
 domain=‘http(s)://lostandfoundv2.yiwangchunyu.wang’
 
+微信小程序登陆流程  
+```mermaid
+graph LR
+    H(用户登录) --> A[获取openid]
+	A --> B(loginByOpenid)
+    B --> C{登录成功?}
+    C -->|是| D(缓存用户信息)
+    C -->|否| E[调用login,鉴权]
+    E -->D
+```
+请注意！：用户在服务端的唯一标识为user_id，不是opendi or stu_id
 ### <a name='login'>login</a> 用户登录（无状态登录）
 url = {domain}/service/user/login   
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|openid | string | Y | 可通过getOpenid获取，获取后清缓存到前端当做tocken |   
-|stu_id | string| Y | 学工号 |   
-|password | string| Y | 学工号密码 |   
-|gender | int| Y | 有1说1，没1说0 |   
-|phone | string| Y | 手机号，前端请在验证码验证后调此接口 |   
-|avatar | string| Y | 头像url（微信头像） |   
+|openid | string | Y | 可通过getOpenid获取，获取后清缓存到前端当做tocken |
+|stu_id | string| Y | 学工号 |
+|password | string| Y | 学工号密码 |
+|gender | int| Y | 有1说1，没1说0 |
+|phone | string| Y | 手机号，前端请在验证码验证后调此接口 |
+|avatar | string| Y | 头像url（微信头像） |
 
 return:
 ```json
@@ -50,9 +61,9 @@ url = {domain}/service/user/getOpenid
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|js_code | string | Y |  |    
+|js_code | string | Y |  |
 
 return:
 ```json
@@ -67,9 +78,9 @@ url = {domain}/service/user/loginByOpenid
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|openid | string | Y |  |    
+|openid | string | Y |  |
 
 return:
 ```json
@@ -97,9 +108,9 @@ url = {domain}/service/user/logout
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|user_id | int | Y |  |    
+|user_id | int | Y |  |
 
 return:
 ```json
@@ -115,9 +126,9 @@ url = {domain}/service/user/get
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|user_id | int | Y |  |    
+|user_id | int | Y |  |
 
 return:
 ```json
@@ -145,10 +156,10 @@ url = {domain}/service/user/update
 method = post   
 params:   
 
-|   名称  | 类型 | 必须 | 备注 |   
+|   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|user_id | int | Y |  |    
-|update | json | Y |  |    
+|user_id | int | Y |  |
+|update | json | Y |  |
 
 e.g.:   
 update={"phone":"18918053907"}   
