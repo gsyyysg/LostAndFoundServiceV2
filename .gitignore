@@ -15,8 +15,9 @@ tests/report/
 
 db.sqlite3
 uwsgi
+!uwsgi/*.gitkeep
+
 media
-!uwsgi/.gitkeep
 .idea
 static
 **/__pycache__
