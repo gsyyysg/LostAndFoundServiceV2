@@ -11,14 +11,14 @@ V1 repo : [LostFoundDjangoService](https://github.com/Above-The-Cloud/LostFoundD
 2.部署流程   
 3.上线流程   
    
-###1.服务介绍   
+### 1.服务介绍   
 * [x] 用户服务user   
 * [ ] 动态服务dynamic   
 * [ ] 上传服务upload   
 * [ ] 通知服务notify   
 
-###2.部署流程
-####2.1安装依赖: 
+### 2.部署流程
+#### 2.1安装依赖: 
 ```
 pip install -r requirements.txt
 ```
@@ -73,7 +73,7 @@ apt install nginx uwsgi mysql-server
 ```
 CREATE DATABASE dbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
-####2.2新建微服务
+#### 2.2新建微服务
 ```shell script
 python manage.py startapp service
 ```
@@ -90,5 +90,5 @@ python manage.py migrate
 python manage.py runserver {IP}:{PORT}
 ```
 
-###3.上线流程
+### 3.上线流程
 需要Nginx，uwsgi支持
