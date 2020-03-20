@@ -12,7 +12,7 @@ V1 repo : [LostFoundDjangoService](https://github.com/Above-The-Cloud/LostFoundD
 3.上线流程   
    
 ### 1.服务介绍   
-* [x] 用户服务user   
+* [x] 用户服务[user](./user/README.md)   
 * [ ] 动态服务dynamic   
 * [ ] 上传服务upload   
 * [ ] 通知服务notify   
@@ -92,3 +92,4 @@ python manage.py runserver {IP}:{PORT}
 
 ### 3.上线流程
 需要Nginx，uwsgi支持
+
