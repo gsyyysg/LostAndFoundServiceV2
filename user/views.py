@@ -2,7 +2,6 @@ import json
 import traceback
 
 from django.core import serializers
-from django.db import models
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -18,28 +17,26 @@ from user.models import UserOpenid, User
 
 @csrf_exempt
 def getOpenid(request):
-    if not {'js_code'}.issubset(set(request.POST.keys())):
-        return HttpResponse(json.dumps({'code': -1, 'msg': 'unexpected params!', 'data': request.POST.dict()}))
+    required = {'js_code'}
+    if not required.issubset(set(request.POST.keys())):
+        return HttpResponse(json.dumps({'code': -1, 'msg': 'unexpected params!',
+                                        'data': {'required': list(required), 'yours': request.POST.dict()}}))
     res=client.getOpenid(request.POST['js_code'])
-    return HttpResponse(json.dumps(res))
+    return JsonResponse(res)
 
 @csrf_exempt
 def loginByOpenid(request):
     res={'code':0, 'msg':'success', 'data':[]}
     required={'openid'}
     if not required.issubset(set(request.POST.keys())):
-        return HttpResponse(json.dumps({'code': -1, 'msg': 'unexpected params!', 'data': {'required':required,'yours':request.POST.dict()}}))
+        return HttpResponse(json.dumps({'code': -1, 'msg': 'unexpected params!', 'data': {'required':list(required),'yours':request.POST.dict()}}))
     try:
         openid=request.POST['openid']
         user_openid=UserOpenid.objects.get(openid=openid, status=1)
         user_info=User.objects.get(id=user_openid.user_id)
-        res['data']=user_info.toJSON()
-    except models.Model.DoesNotExist:
-        res={'code':-2, 'msg':'need login,please', 'data':[]}
-    except models.Model.MultipleObjectsReturned:
-        res={'code':-2, 'msg':'MultipleObjectsReturned', 'data':[]}
+        res['data']=user_info.format()
     except Exception as e:
-        res={'code':-2, 'msg':e, 'data':[]}
+        res={'code':-2, 'msg':e.__str__(), 'data':[]}
     return HttpResponse(json.dumps(res))
 
 @csrf_exempt
@@ -92,17 +89,14 @@ def logout(request):
     res={'code':0, 'msg':'success', 'data':[]}
     required={'user_id'}
     if not required.issubset(set(request.POST.keys())):
-        return JsonResponse({'code': -1, 'msg': 'unexpected params!', 'data': {'required':required,'yours':request.POST.dict()}})
+        return JsonResponse({'code': -1, 'msg': 'unexpected params!',
+                             'data': {'required': list(required), 'yours': request.POST.dict()}})
     try:
         user_id=request.POST['user_id']
         UserOpenid.objects.filter(user_id=user_id).update(status=1)
-    except models.Model.DoesNotExist:
-        res={'code':-2, 'msg':'DoesNotExist', 'data':[]}
-    except models.Model.MultipleObjectsReturned:
-        res={'code':-2, 'msg':'MultipleObjectsReturned', 'data':[]}
     except Exception as e:
-        res={'code':-2, 'msg':e, 'data':[]}
-    return HttpResponse(json.dumps(res))
+        res={'code':-2, 'msg':e.__str__(), 'data':[]}
+    return JsonResponse(res)
 
 @csrf_exempt
 def update(request):
@@ -110,31 +104,38 @@ def update(request):
     required = {'user_id','update'}
     if not required.issubset(set(request.POST.keys())):
         return JsonResponse(
-            {'code': -1, 'msg': 'unexpected params!', 'data': {'required': required, 'yours': request.POST.dict()}})
+            {'code': -1, 'msg': 'unexpected params!', 'data': {'required': list(required), 'yours': request.POST.dict()}})
     try:
         user_id = request.POST['user_id']
-        update = request.POST['update'].dict()
-        user=User.objects.filter(id=user_id).update(update)
-        res['data']=user.toJSON()
+        update = request.POST['update']
+        try:
+            if isinstance(update,str):
+                update=json.loads(update)
+            if not isinstance(update,dict):
+                return JsonResponse({'code': -3, 'msg':'field "update" shoud be a JSON object or JSON string', 'data': []})
+        except Exception as e:
+            return JsonResponse({'code': -4, 'msg':e.__str__(), 'data': 'json unserilized error'})
+        User.objects.filter(id=user_id).update(**update)
     except Exception as e:
-        res = {'code': -2, 'msg': e, 'data': []}
-    return HttpResponse(json.dumps(res))
+        res = {'code': -2, 'msg': e.__str__(), 'data': []}
+    return JsonResponse(res)
 
+@csrf_exempt
 def get(request):
     res = {'code': 0, 'msg': 'success', 'data': []}
     required = {'user_id'}
     if not required.issubset(set(request.POST.keys())):
         return JsonResponse(
-            {'code': -1, 'msg': 'unexpected params!', 'data': {'required': required, 'yours': request.POST.dict()}}
-        )
+            {'code': -1, 'msg': 'unexpected params!', 'data': {'required': list(required), 'yours': request.POST.dict()}})
+
     try:
         user_id = request.POST['user_id']
         user=User.objects.get(id=user_id)
-        res['data']=user.toJSON()
-    except models.Model.DoesNotExist:
+        res['data']=user.format()
+    except User.DoesNotExist:
         res = {'code': -2, 'msg': 'DoesNotExist', 'data': []}
-    except models.Model.MultipleObjectsReturned:
+    except User.MultipleObjectsReturned:
         res = {'code': -2, 'msg': 'MultipleObjectsReturned', 'data': []}
     except Exception as e:
-        res = {'code': -2, 'msg': e, 'data': []}
-    return HttpResponse(json.dumps(res))
+        res = {'code': -2, 'msg': e.__str__(), 'data': []}
+    return JsonResponse(res)
