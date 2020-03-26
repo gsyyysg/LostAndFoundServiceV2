@@ -140,4 +140,4 @@ if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
 DOMAIN='127.0.0.1:8000' if DEBUG else 'lostandfoundv2.yiwangchunyu.wang'
-URL_PREFIX=('http://' if DEBUG else 'https://') + DOMAIN
+URL_PREFIX=('http://' if DEBUG else 'http://') + DOMAIN
