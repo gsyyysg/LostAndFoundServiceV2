@@ -28,7 +28,7 @@ class Dynamic(BaseModel):
     location = models.TextField(default=json.dumps({}), blank=True, null=False)
     meta = models.CharField(max_length=255, default='',null=True,blank=True)
 
-    belongsTo = models.IntegerField(default=1) #流转状态
+    belongsTo = models.IntegerField(default=0) #流转状态
     state = models.IntegerField(default=1) #流转状态
 
     def format(self, if_time_format=True, time_format=''):
