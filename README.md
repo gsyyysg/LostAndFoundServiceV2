@@ -14,8 +14,8 @@ V1 repo : [LostFoundDjangoService](https://github.com/Above-The-Cloud/LostFoundD
 ### 1.服务介绍   
 * [x] 用户服务[user](./user/README.md)   
 * [x] 动态服务[dynamic](./dynamic/README.md)    
-* [ ] 上传服务[upload](./upload/README.md)   
-* [ ] 通知服务notify   
+* [x] 上传服务[upload](./upload/README.md)   
+* [ ] ~~通知服务notify~~   
 
 ### 2.部署流程
 #### 2.1安装依赖: 
@@ -93,3 +93,26 @@ python manage.py runserver {IP}:{PORT}
 ### 3.上线流程
 需要Nginx，uwsgi支持
 
+####关于django admin   
+创建超级用户
+```shell script
+python manage.py createsuperser
+```
+在服务文件夹里配置admin，如./user/admin.py
+
+创建数据库并设置数据库编码
+```
+CREATE DATABASE dbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+同步数据库接口
+```shell script
+python manage.py makemigrations
+python manage.py migrate
+```
+
+####上线：
+```shell script
+
+
+```
