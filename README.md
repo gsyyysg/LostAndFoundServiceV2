@@ -93,12 +93,7 @@ python manage.py runserver {IP}:{PORT}
 ### 3.上线流程
 需要Nginx，uwsgi支持
 
-####关于django admin   
-创建超级用户
-```shell script
-python manage.py createsuperser
-```
-在服务文件夹里配置admin，如./user/admin.py
+
 
 创建数据库并设置数据库编码
 ```
@@ -116,3 +111,10 @@ python manage.py migrate
 
 
 ```
+
+####关于django admin   
+创建超级用户
+```shell script
+python manage.py createsuperuser
+```
+在服务文件夹里配置admin，如./user/admin.py
