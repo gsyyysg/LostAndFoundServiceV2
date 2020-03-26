@@ -52,8 +52,8 @@ def dynamicImg(request):
             res={'code':-1,'msg':"无上传图片", 'data':[]}
         else:
             dt=datetime.now()
-            url_mid='/dynamic/{0}/{1}/{2}'.format(dt.year,dt.month,dt.day)
-            dir = settings.MEDIA_ROOT+url_mid
+            url_mid='dynamic/{0}/{1}/{2}'.format(dt.year,dt.month,dt.day)
+            dir = '{0}/{1}'.format(settings.MEDIA_ROOT,url_mid)
             if not os.path.exists(dir):
                 os.makedirs(dir)
 
