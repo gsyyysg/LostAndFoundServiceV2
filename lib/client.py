@@ -18,6 +18,7 @@ def studentLogin(stu_id, stu_pwd):
         r['code']=1-r['ret']
     except Exception as e:
         traceback.print_exc()
+        log('ERROE','@client studentLogin',e.__str__())
         return {'code':-2,'msg':e.__str__(),'data':[]}
     return r
 

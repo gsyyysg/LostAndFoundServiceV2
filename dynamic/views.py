@@ -43,13 +43,13 @@ def create(request):
     try:
         Dynamic.objects.create(**params)
         #校园卡专区
-        if params.get('type')==2 and params.get('category')==1: #
+        if int(params.get('type',0))==2 and int(params.get('category',0))==1: #
             if params.get('meta',False) and len(params['meta'])>2: #提取学号
                 #提取手机号
                 rpc_res=client.rpc('user/get',{'stu_id':params['meta']})
                 if rpc_res is None or rpc_res['code']!=0:
                     utils.log('ERROR','dynamic create', 'get use phone NO failed.', data=rpc_res)
-                if len(rpc_res['data']['phone'])>2:
+                elif len(rpc_res['data']['phone'])>2:
                     sms.send_for_loser(
                         phoneNO=rpc_res['data']['phone'],
                         name=rpc_res['data']['name'],

@@ -5,6 +5,9 @@ import json
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 
+from lib.utils import log
+
+
 def send_for_loser(phoneNO, name, good_name):
     client = AcsClient('LTAI4FeLEc4Dip1GjscRKbZp', 'VU0g2It8wEaYDGWvXpJV0nUd9FkmzN', 'cn-hangzhou')
 
@@ -21,7 +24,7 @@ def send_for_loser(phoneNO, name, good_name):
     request.add_query_param('SignName', "ELostFound")
     request.add_query_param('TemplateCode', "SMS_183242773")
     request.add_query_param('TemplateParam', json.dumps({'name':name,'goods_name':good_name}))
-    print(json.dumps({'name':name,'good_name':good_name}))
+    log('INFO','@sms send_for_loser','params',data={'phoneNO':phoneNO,'name':name,'goods_name':good_name})
     response = client.do_action_with_exception(request)
     # python2:  print(response)
-    print(str(response, encoding = 'utf-8'))
+    log('INFO','@sms send_for_loser','result',data=response)
