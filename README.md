@@ -105,7 +105,7 @@ CREATE DATABASE dbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 python manage.py makemigrations
 python manage.py migrate
 ```
-
+python manage.py collectstatic
 ####上线：
 ```shell script
 
