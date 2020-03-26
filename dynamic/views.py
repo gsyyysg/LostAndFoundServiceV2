@@ -43,7 +43,7 @@ def create(request):
     try:
         Dynamic.objects.create(**params)
         #校园卡专区
-        if params.get('type')==1 and params.get('category')==1: #
+        if params.get('type')==2 and params.get('category')==1: #
             if params.get('meta',False) and len(params['meta'])>2: #提取学号
                 #提取手机号
                 rpc_res=client.rpc('user/get',{'stu_id':params['meta']})

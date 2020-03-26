@@ -58,7 +58,7 @@ params:
 |   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
 |user_id | int | Y |  |
-|type | int | Y |  |
+|type | int | Y | 1:lost 2:found |
 |category | int | Y |  |
 |title | string | Y |  物品名称（保留字段，可传''）|
 |desc | string | Y |  物品描述|
