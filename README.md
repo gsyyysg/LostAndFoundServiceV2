@@ -13,7 +13,7 @@ V1 repo : [LostFoundDjangoService](https://github.com/Above-The-Cloud/LostFoundD
    
 ### 1.服务介绍   
 * [x] 用户服务[user](./user/README.md)   
-* [ ] 动态服务dynamic   
+* [x] 动态服务[dynamic](./dynamic/README.md)    
 * [ ] 上传服务[upload](./upload/README.md)   
 * [ ] 通知服务notify   
 

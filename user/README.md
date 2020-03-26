@@ -131,7 +131,8 @@ params:
 
 |   名称  | 类型 | 必须 | 备注 |
 | :-----| ----: | :----: | :----: |
-|user_id | int | Y |  |
+|id | int | N |  |
+|stu_id | int | N |  |
 
 return:
 ```json

@@ -17,8 +17,8 @@ db.sqlite3
 uwsgi/*
 !uwsgi/*.gitkeep
 
-media
-.idea
-static
+media/
+.idea/
+static/
 **/__pycache__
 **/migrations

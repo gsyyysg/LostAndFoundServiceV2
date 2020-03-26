@@ -1,17 +1,15 @@
 import json
 import traceback
 
-from django.core import serializers
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-from pyexpat import model
 
 from lib import client
 from lib.client import studentLogin, rpc
 from lib.utils import log
+from lib.view import check
 from user.models import UserOpenid, User
 
 
@@ -124,14 +122,16 @@ def update(request):
 @csrf_exempt
 def get(request):
     res = {'code': 0, 'msg': 'success', 'data': []}
-    required = {'user_id'}
-    if not required.issubset(set(request.POST.keys())):
-        return JsonResponse(
-            {'code': -1, 'msg': 'unexpected params!', 'data': {'required': list(required), 'yours': request.POST.dict()}})
-
+    params=request.POST.dict()
+    required = {
+        'id':{},
+        'stu_id':{}
+    }
+    check_res = check(required, params)
+    if check_res is None or check_res['code'] != 0:
+        return JsonResponse(check_res)
     try:
-        user_id = request.POST['user_id']
-        user=User.objects.get(id=user_id)
+        user=User.objects.get(**params)
         res['data']=user.format()
     except User.DoesNotExist:
         res = {'code': -2, 'msg': 'DoesNotExist', 'data': []}

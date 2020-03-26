@@ -5,7 +5,7 @@ import json
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 
-def send(phoneNO, name, good_name):
+def send_for_loser(phoneNO, name, good_name):
     client = AcsClient('LTAI4FeLEc4Dip1GjscRKbZp', 'VU0g2It8wEaYDGWvXpJV0nUd9FkmzN', 'cn-hangzhou')
 
     request = CommonRequest()
