@@ -1,3 +1,4 @@
+import datetime
 import json
 import traceback
 
@@ -40,7 +41,7 @@ def loginByOpenid(request):
 @csrf_exempt
 def login(request):
     res={'code':0, 'msg':'success', 'data':[]}
-    required={'openid','stu_id','password','phone','avatar','gender'}
+    required={'openid','stu_id','password','phone','avatar','gender','nick_name'}
     if not required.issubset(set(request.POST.keys())):
         return JsonResponse({'code': -1, 'msg': 'unexpected params!', 'data': {'required':list(required),'yours':request.POST.dict()}})
     try:
@@ -139,4 +140,29 @@ def get(request):
         res = {'code': -2, 'msg': 'MultipleObjectsReturned', 'data': []}
     except Exception as e:
         res = {'code': -2, 'msg': e.__str__(), 'data': []}
+    return JsonResponse(res)
+
+@csrf_exempt
+def insert(request):
+    res = {'code': 0, 'msg': 'success', 'data': []}
+    params=request.POST.dict()
+    stu_id=params['stu_id']
+    params.pop('stu_id')
+    params['ctime']=datetime.datetime.strptime(params['ctime'], "%Y-%m-%d %H:%M:%S")
+    try:
+        user,cteated=User.objects.update_or_create(stu_id=stu_id,defaults=params)
+
+        # 将头像存在本地
+        rpc_res = rpc(fc='upload/avatar', data={'avatar': user.avatar, 'user_id': user.id})
+        if rpc_res['code'] != None:
+            if rpc_res['code'] == 0:
+                user.avatar = rpc_res['data']['avatar']
+                user.save()
+            else:
+                log('ERROR', 'user login', 'faild to save avatar', data=user.avatar)
+
+        res['data'] = user.format()
+    except Exception as e:
+        res = {'code': -2, 'msg': e.__str__(), 'data': []}
+        log('ERROR','@user inster',e.__str__())
     return JsonResponse(res)

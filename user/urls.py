@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^logout$', views.logout),
     url(r'^getOpenid$', views.getOpenid),
     url(r'^update$', views.update),
-
+    url(r'^insert$', views.insert),
 ]

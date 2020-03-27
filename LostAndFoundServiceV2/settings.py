@@ -124,7 +124,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -140,4 +140,4 @@ if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
 DOMAIN='127.0.0.1:8000' if DEBUG else 'lostandfoundv2.yiwangchunyu.wang'
-URL_PREFIX=('http://' if DEBUG else 'http://') + DOMAIN
+URL_PREFIX=('http://' if DEBUG else 'https://') + DOMAIN
